@@ -3,6 +3,9 @@
 import os
 import sys
 
+# todoapi = protorh
+# todolist = api
+
 
 def main():
     """Run administrative tasks."""

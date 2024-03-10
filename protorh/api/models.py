@@ -17,7 +17,8 @@ class User(models.Model):
     email = models.TextField(
         max_length=1000,
         null=False,
-        blank=False
+        blank=False,
+        unique=True,
     )
 
     creation_date = models.DateTimeField(
