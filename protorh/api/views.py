@@ -21,25 +21,16 @@ class UserView(APIView, UpdateModelMixin, DestroyModelMixin):
         """_summary_
         """
         if id:
-            # If an id is provided in the GET request, retrieve the Todo item by that id
             try:
-                # Check if the todo item the user wants to update exists
                 queryset = User.objects.get(id=id)
             except User.DoesNotExist:
-                # If the todo item does not exist, return an error response
                 return Response({'errors': 'This todo item does not exist.'}, status=400)
 
-            # Serialize todo item from Django queryset object to JSON formatted data
             read_serializer = UserSerializer(queryset)
 
         else:
-            # Get all todo items from the database using Django's model ORM
             queryset = User.objects.all()
-
-            # Serialize list of todos item from Django queryset object to JSON formatted data
             read_serializer = UserSerializer(queryset, many=True)
-
-        # Return a HTTP response object with the list of todo items as JSON
         return Response(read_serializer.data)
 
     def post(self, request):
@@ -48,11 +39,15 @@ class UserView(APIView, UpdateModelMixin, DestroyModelMixin):
         Args:
             request (_type_): _description_
         """
-        pass
+        create_serializer = UserSerializer(data=request.data)
+        if create_serializer.is_valid():
+            user_item_object = create_serializer.save()
+            read_serializer = UserSerializer(user_item_object)
+            return Response(read_serializer.data, status=201)
+        return Response(create_serializer.errors, status=400)
 
     def put(self, request, id=None):
         """_summary_
-
         Args:
             request (_type_): _description_
             id (_type_, optional): _description_. Defaults to None.

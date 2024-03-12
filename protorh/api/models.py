@@ -14,8 +14,8 @@ class User(models.Model):
         blank=False
     )
 
-    email = models.TextField(
-        max_length=1000,
+    email = models.EmailField(
+        max_length=255,
         null=False,
         blank=False,
         unique=True,

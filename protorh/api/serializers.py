@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         serializers (_type_): _description_
     """
     firstname = serializers.CharField(max_length=1000, required=True)
-    email = serializers.CharField(max_length=1000, required=True)
+    email = serializers.EmailField(max_length=1000, required=True)
 
     class Meta:
         model = User
